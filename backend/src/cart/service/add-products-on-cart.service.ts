@@ -1,7 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CartItem } from 'src/entities/cart-item.entity';
 import { AddItemDto } from '../dto/add-item.dto';
-import { Cart } from 'src/entities/cart.entity';
 import { Product } from 'src/entities/product.entity';
 
 @Injectable()
@@ -26,13 +25,14 @@ export class AddProductsOnCartService {
 
       if (addItem.quantity > stockProduct || stockProduct <= 0) {
         throw new BadRequestException(
-          'A quantidade solicitada excede o estoque disponível',
+          'Sem estoque disponível',
         );
       }
 
       stockProduct -= addItem.quantity;
       productExists.stock = stockProduct;
       productExists.save();
+      
     } else {
       throw new BadRequestException('Produto não encontrado');
     }

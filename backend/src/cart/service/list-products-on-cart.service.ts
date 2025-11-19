@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { CartItem } from 'src/entities/cart-item.entity';
-import { Product } from 'src/entities/product.entity';
 
 @Injectable()
 export class ListProductsOnCartService {
   public async execute(
     cartId: string,
-  ): Promise<{ name: string; description: string; quantity: number }[]> {
+  ): Promise<{ name: string; description?: string | null; quantity: number }[]> {
     const productsOnCart = await CartItem.createQueryBuilder('cart_item')
       .innerJoin('cart_item.product', 'product')
       .select(['cart_item', 'product'])

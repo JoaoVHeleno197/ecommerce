@@ -6,7 +6,10 @@ import { CartItem } from '../entities/cart-item.entity';
 import {
   AddProductsOnCartService,
   CreateCartService,
+  DeleteCartService,
+  DeleteProductOnCartService,
   ListProductsOnCartService,
+  UpdateProductsOnCartService,
 } from './service';
 
 @Module({
@@ -16,6 +19,9 @@ import {
     AddProductsOnCartService,
     ListProductsOnCartService,
     CreateCartService,
+    DeleteCartService,
+    DeleteProductOnCartService,
+    UpdateProductsOnCartService,
   ],
 })
 export class CartModule {}

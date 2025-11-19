@@ -15,8 +15,6 @@ export class ListProductsService {
       throw new BadRequestException('Produtos não encontrados');
     }
 
-    console.log(products);
-
     return products;
   }
 }

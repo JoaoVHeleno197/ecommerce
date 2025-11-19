@@ -18,8 +18,8 @@ export class Product extends BaseEntity {
   @Column('varchar')
   name: string;
 
-  @Column('text')
-  description: string;
+  @Column('text', { nullable: true })
+  description: string | null;
 
   @Column('real')
   price: number;

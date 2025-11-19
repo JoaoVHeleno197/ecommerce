@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config'; // Módulo de Configuração
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ProductsModule } from './products/products.module';
 import { CartModule } from './cart/cart.module';
 import { ProductsController } from './products/controller/products.controller';
@@ -16,6 +16,9 @@ import {
   ListProductsOnCartService,
   AddProductsOnCartService,
   CreateCartService,
+  DeleteCartService,
+  DeleteProductOnCartService,
+  UpdateProductsOnCartService,
 } from './cart/service';
 
 @Module({
@@ -50,6 +53,9 @@ import {
     AddProductsOnCartService,
     ListProductsOnCartService,
     CreateCartService,
+    DeleteCartService,
+    DeleteProductOnCartService,
+    UpdateProductsOnCartService,
   ],
 })
 export class AppModule {}

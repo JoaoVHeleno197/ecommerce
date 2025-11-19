@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { Product } from '../../entities/product.entity';
 
@@ -8,9 +8,19 @@ export class CreateProductService {
     const newProduct = new Product();
 
     newProduct.name = product.name;
-    newProduct.description = product.description ?? '';
+    if(product.description) {
+      newProduct.description = product.description
+    }
     newProduct.price = product.price;
     newProduct.stock = product.stock;
+
+    const productExists = await Product.findOne({
+      where: { name: product.name },
+    });
+
+    if(productExists && productExists.deletedAt === null) {
+      throw new BadRequestException('Produto já existe');
+    }
 
     const saveProduct = await newProduct.save();
 
