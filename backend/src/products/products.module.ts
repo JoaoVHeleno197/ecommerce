@@ -1,22 +1,24 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Product } from './entities/product.entity'; 
+import { Product } from '../entities/product.entity';
 import { ProductsController } from './controller/products.controller';
-import { 
+import {
   CreateProductService,
   ListProductsService,
   DeleteProductsService,
-  ListProductService
+  ListProductService,
+  UpdateProductService,
 } from './service/index';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Product])], 
+  imports: [TypeOrmModule.forFeature([Product])],
   controllers: [ProductsController],
   providers: [
     CreateProductService,
     ListProductsService,
     DeleteProductsService,
-    ListProductService
+    ListProductService,
+    UpdateProductService,
   ],
 })
 export class ProductsModule {}
