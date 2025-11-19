@@ -37,7 +37,7 @@ export class UpdateProductService {
       where: { name: updateProduct.name },
     });
 
-    if(productExists) {
+    if(productExists && productExists.name === updateProduct.name) {
       throw new BadRequestException('Já existe um produto com esse nome');
     }
 
