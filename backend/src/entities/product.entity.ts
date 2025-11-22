@@ -1,4 +1,6 @@
 import { CartItem } from 'src/entities/cart-item.entity';
+import { ProductTypeEnum } from 'src/enum/product-type.enum';
+import { dbTypes } from 'src/typeorm/type';
 import {
   BaseEntity,
   Column,
@@ -26,6 +28,9 @@ export class Product extends BaseEntity {
 
   @Column('int')
   stock: number;
+
+  @Column({ type: dbTypes.enumType, enum: ProductTypeEnum, nullable: true })
+  type: ProductTypeEnum;
 
   @OneToMany(() => CartItem, (cartItem) => cartItem.productId)
   cartItems: CartItem[];

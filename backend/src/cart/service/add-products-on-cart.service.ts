@@ -5,10 +5,10 @@ import { Product } from 'src/entities/product.entity';
 
 @Injectable()
 export class AddProductsOnCartService {
-  public async execute(addItem: AddItemDto): Promise<void> {
+  public async execute(idCart: string, addItem: AddItemDto): Promise<void> {
     const cartItem = new CartItem();
 
-    cartItem.cartId = addItem.cartId;
+    cartItem.cartId = idCart;
     cartItem.productId = addItem.productId;
     cartItem.quantity = addItem.quantity;
 
@@ -17,22 +17,20 @@ export class AddProductsOnCartService {
     });
 
     const productExistsOnCart = await CartItem.findOne({
-      where: { productId: addItem.productId, cartId: addItem.cartId },
+      where: { productId: addItem.productId, cartId: idCart },
     });
 
     if (productExists) {
       let stockProduct = productExists.stock;
 
+      stockProduct -= addItem.quantity;
+
       if (addItem.quantity > stockProduct || stockProduct <= 0) {
-        throw new BadRequestException(
-          'Sem estoque disponível',
-        );
+        throw new BadRequestException('Sem estoque disponível');
       }
 
-      stockProduct -= addItem.quantity;
       productExists.stock = stockProduct;
       productExists.save();
-      
     } else {
       throw new BadRequestException('Produto não encontrado');
     }

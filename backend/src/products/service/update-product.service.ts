@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Product } from 'src/entities/product.entity';
 import { UpdateProductDto } from '../dto/update-product.dto';
 import { NotFoundError } from 'rxjs';
@@ -17,7 +21,8 @@ export class UpdateProductService {
 
     if (
       updateProduct.name?.trim() === '' ||
-      (updateProduct.description?.trim() === '' || updateProduct.description === null)
+      updateProduct.description?.trim() === '' ||
+      updateProduct.description === null
     ) {
       throw new BadRequestException('Nome e descrição não podem ser vazios');
     }
@@ -29,15 +34,20 @@ export class UpdateProductService {
       throw new BadRequestException('Preço e estoque não podem ser negativos');
     }
 
-    if(product.deletedAt !== null) {
-      throw new BadRequestException('Não é possível atualizar um produto excluído');
+    if (product.deletedAt !== null) {
+      throw new BadRequestException(
+        'Não é possível atualizar um produto excluído',
+      );
     }
 
     const productExists = await Product.findOne({
-      where: { name: updateProduct.name },
+      where: { name: updateProduct.name?.trim() },
     });
 
-    if(productExists && productExists.name === updateProduct.name) {
+    if (
+      productExists &&
+      updateProduct.name?.trim() === productExists.name.trim()
+    ) {
       throw new BadRequestException('Já existe um produto com esse nome');
     }
 

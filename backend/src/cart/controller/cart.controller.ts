@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import {
   AddProductsOnCartService,
   CreateCartService,
@@ -8,6 +16,7 @@ import { AddItemDto } from '../dto/add-item.dto';
 import { UpdateProductsOnCartService } from '../service/update-products-on-cart.service';
 import { DeleteProductOnCartService } from '../service/delete-product-on-cart.service';
 import { DeleteCartService } from '../service/delete-cart.service';
+import { UpdateItemDto } from '../dto/update-item.dto';
 
 @Controller('cart')
 export class CartController {
@@ -26,10 +35,16 @@ export class CartController {
     return cartItems;
   }
 
-  @Post('add-product')
-  public async addProductToCart(@Body() addItemDto: AddItemDto) {
-    const cartItem = this.addProductsOnCartService.execute(addItemDto);
-    return await cartItem;
+  @Post(':cartId/add-product')
+  public async addProductToCart(
+    @Param('cartId') cartId: string,
+    @Body() addItemDto: AddItemDto,
+  ) {
+    const cartItem = await this.addProductsOnCartService.execute(
+      cartId,
+      addItemDto,
+    );
+    return cartItem;
   }
 
   @Post('create-cart')
@@ -40,11 +55,13 @@ export class CartController {
 
   @Put(':id')
   public async updateProductOnCart(
-    @Param() id: string, 
-    @Body() updateItemDto: AddItemDto
+    @Param() id: string,
+    @Body() updateItemDto: UpdateItemDto,
   ) {
-    const updatedItem = 
-      await this.updateProductsOnCartService.execute(id, updateItemDto);
+    const updatedItem = await this.updateProductsOnCartService.execute(
+      id,
+      updateItemDto,
+    );
     return updatedItem;
   }
 
@@ -53,16 +70,16 @@ export class CartController {
     @Param('cartId') cartId: string,
     @Param('productId') productId: string,
   ) {
-    const deletedProduct = await this.deleteProductOnCartService.execute(cartId, productId);
+    const deletedProduct = await this.deleteProductOnCartService.execute(
+      cartId,
+      productId,
+    );
     return deletedProduct;
   }
 
   @Delete(':cartId')
-  public async deleteCart(
-    @Param('cartId') cartId: string,
-  ) {
+  public async deleteCart(@Param('cartId') cartId: string) {
     const deletedCart = await this.deleteCartService.execute(cartId);
     return deletedCart;
   }
-
 }
