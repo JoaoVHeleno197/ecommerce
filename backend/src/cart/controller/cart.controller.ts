@@ -17,7 +17,9 @@ import { UpdateProductsOnCartService } from '../service/update-products-on-cart.
 import { DeleteProductOnCartService } from '../service/delete-product-on-cart.service';
 import { DeleteCartService } from '../service/delete-cart.service';
 import { UpdateItemDto } from '../dto/update-item.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Cart')
 @Controller('cart')
 export class CartController {
   constructor(
@@ -30,12 +32,14 @@ export class CartController {
   ) {}
 
   @Get(':cartId/products')
+  @ApiOperation({ summary: 'Listar produtos no carrinho pelo ID do carrinho' })
   public async listCartProducts(@Param('cartId') cartId: string) {
     const cartItems = await this.listProductsOnCartService.execute(cartId);
     return cartItems;
   }
 
   @Post(':cartId/add-product')
+  @ApiOperation({ summary: 'Adicionar um produto ao carrinho' })
   public async addProductToCart(
     @Param('cartId') cartId: string,
     @Body() addItemDto: AddItemDto,
@@ -48,12 +52,14 @@ export class CartController {
   }
 
   @Post('create-cart')
+  @ApiOperation({ summary: 'Criar um novo carrinho' })
   public async createCart() {
     const cart = await this.createCartService.execute();
     return cart;
   }
 
   @Put(':id')
+  @ApiOperation({ summary: 'Atualizar um produto no carrinho' })
   public async updateProductOnCart(
     @Param() id: string,
     @Body() updateItemDto: UpdateItemDto,
@@ -66,6 +72,7 @@ export class CartController {
   }
 
   @Delete(':cartId/product/:productId')
+  @ApiOperation({ summary: 'Remover um produto do carrinho' })
   public async deleteProductFromCart(
     @Param('cartId') cartId: string,
     @Param('productId') productId: string,
@@ -78,6 +85,7 @@ export class CartController {
   }
 
   @Delete(':cartId')
+  @ApiOperation({ summary: 'Excluir o carrinho pelo ID' })
   public async deleteCart(@Param('cartId') cartId: string) {
     const deletedCart = await this.deleteCartService.execute(cartId);
     return deletedCart;
