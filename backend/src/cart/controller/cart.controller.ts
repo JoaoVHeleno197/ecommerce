@@ -58,14 +58,16 @@ export class CartController {
     return cart;
   }
 
-  @Put(':id')
+  @Put(':cartId/product/:productId')
   @ApiOperation({ summary: 'Atualizar um produto no carrinho' })
   public async updateProductOnCart(
-    @Param() id: string,
+    @Param() params: { cartId: string; productId: string },
     @Body() updateItemDto: UpdateItemDto,
   ) {
+    const { cartId, productId } = params;
     const updatedItem = await this.updateProductsOnCartService.execute(
-      id,
+      cartId,
+      productId,
       updateItemDto,
     );
     return updatedItem;
@@ -74,9 +76,9 @@ export class CartController {
   @Delete(':cartId/product/:productId')
   @ApiOperation({ summary: 'Remover um produto do carrinho' })
   public async deleteProductFromCart(
-    @Param('cartId') cartId: string,
-    @Param('productId') productId: string,
+    @Param() params: { cartId: string; productId: string },
   ) {
+    const { cartId, productId } = params;
     const deletedProduct = await this.deleteProductOnCartService.execute(
       cartId,
       productId,

@@ -33,8 +33,8 @@ export class ProductsController {
   @Get()
   @ApiOperation({ summary: 'Listar todos os produtos' })
   public async findAllProducts() {
-    const products = this.listProductsService.execute();
-    return await products;
+    const products = await this.listProductsService.execute();
+    return products;
   }
 
   @Get(':id')
@@ -46,8 +46,8 @@ export class ProductsController {
   @Post()
   @ApiOperation({ summary: 'Criar um novo produto' })
   public async create(@Body() newProduct: CreateProductDto) {
-    const createProduct = this.createProductService.execute(newProduct);
-    return await createProduct;
+    const createProduct = await this.createProductService.execute(newProduct);
+    return createProduct;
   }
 
   @Put(':id')

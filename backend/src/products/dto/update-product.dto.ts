@@ -1,5 +1,3 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateProductDto } from './create-product.dto';
 import { IsNumber, IsString, Min } from 'class-validator';
 
 export class UpdateProductDto {
@@ -16,4 +14,7 @@ export class UpdateProductDto {
   @IsNumber()
   @Min(0)
   stock?: number;
+
+  @IsString()
+  type?: string;
 }

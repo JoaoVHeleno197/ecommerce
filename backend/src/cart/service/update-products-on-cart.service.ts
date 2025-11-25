@@ -5,13 +5,14 @@ import { UpdateItemDto } from "../dto/update-item.dto";
 @Injectable()
 export class UpdateProductsOnCartService {
     public async execute(
-        itemId: string, 
+        cartId: string,
+        itemId: string,
         updateData: UpdateItemDto 
     ): Promise<CartItem> {
         const productOnCart = await CartItem.findOne({
             where: {
-                id: itemId, 
-                cartId: updateData.cartId, 
+                productId: itemId, 
+                cartId: cartId, 
             },
         });
 
