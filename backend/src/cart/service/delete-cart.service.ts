@@ -27,6 +27,6 @@ export class DeleteCartService {
       );
     }
 
-    await Cart.delete({ id: cartId });
+    await cartExists.softRemove();
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Product } from '../../entities/product.entity';
 
 @Injectable()
@@ -7,7 +7,7 @@ export class ListProductService {
     const product = await Product.findOne({ where: { id: productId } });
 
     if (!product) {
-      throw new Error('Produto não encontrado');
+      throw new NotFoundException('Produto não encontrado');
     }
 
     return product;

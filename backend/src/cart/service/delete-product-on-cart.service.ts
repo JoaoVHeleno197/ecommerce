@@ -6,7 +6,7 @@ export class DeleteProductOnCartService {
     public async execute(cartId: string, productId: string): Promise<void> {
         const productOnCart = await CartItem.findOne({
             where: {
-                id: productId, 
+                productId: productId, 
                 cartId: cartId, 
             },
         });
@@ -15,6 +15,6 @@ export class DeleteProductOnCartService {
             throw new Error('Produto não encontrado no carrinho.');
         }
 
-        await CartItem.delete({ id: productId, cartId: cartId });
+        await productOnCart.softRemove();
     }
 }

@@ -20,6 +20,7 @@ export class ListProductsOnCartService {
       name: product.name,
       description: product.description,
       quantity: quantity[products.indexOf(product)],
+      type: product.type
     }));
 
     return nameProducts;
