@@ -20,28 +20,34 @@ export class AddProductsOnCartService {
       where: { productId: addItem.productId, cartId: idCart },
     });
 
-    if (productExists) {
-      let stockProduct = productExists.stock;
+    try {
+        if (productExists) {
+        let stockProduct = productExists.stock;
 
-      stockProduct -= addItem.quantity;
+        stockProduct -= addItem.quantity;
 
-      if (addItem.quantity > stockProduct || stockProduct <= 0) {
-        throw new BadRequestException('Sem estoque disponível');
+        if (addItem.quantity > stockProduct || stockProduct <= 0) {
+          throw new BadRequestException('Sem estoque disponível');
+        }
+
+        productExists.stock = stockProduct;
+        productExists.save();
+      } else {
+        throw new BadRequestException('Produto não encontrado');
       }
 
-      productExists.stock = stockProduct;
-      productExists.save();
-    } else {
-      throw new BadRequestException('Produto não encontrado');
+      if (productExistsOnCart) {
+        throw new BadRequestException('Produto já existe no carrinho');
+      }
+
+      if (cartItem.quantity <= 0) {
+        throw new BadRequestException('A quantidade deve ser maior que zero');
+      }
+    } catch (error) {
+      console.error(error.message);
     }
 
-    if (productExistsOnCart) {
-      throw new BadRequestException('Produto já existe no carrinho');
-    }
-
-    if (cartItem.quantity <= 0) {
-      throw new BadRequestException('A quantidade deve ser maior que zero');
-    }
+    
 
     await cartItem.save();
   }
