@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { getProductList } from "../../services/product/integration";
 import type { Product } from "../../services/product/types";
+import { ButtonP } from "../../components/botao/ButtonP.tsx";
 
-export const ProductPage = () => {
+const ProductPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   
   useEffect(() => {
@@ -19,10 +20,16 @@ export const ProductPage = () => {
     <>
       {products.map((product) => (
         <div key={product.id}>
-          <h2>{product.name}</h2>
+          <h2 style={{ textAlign: 'center' }}>{product.name}</h2>
           <p>{product.description}</p> 
           <p>Preço: R${product.price}</p>
-          <p>Estoque: {product.stock}</p>
+
+          {product.stock > 0 ? (
+            <ButtonP onClick={() => {}}>Adicionar ao carrinho</ButtonP>
+          ) : (
+            <ButtonP onClick={() => {}} disabled={true}>Produto esgotado</ButtonP>
+          )}
+
         </div>
       ))}
     </>
