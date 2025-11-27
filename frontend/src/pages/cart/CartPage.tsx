@@ -1,4 +1,4 @@
-export default function Cart() {
+export const Cart = () => {
   return (
     <>
       <h1>VIIIIIIIINICIUS</h1>
@@ -6,3 +6,5 @@ export default function Cart() {
     </>
   );
 }
+
+export default Cart;
