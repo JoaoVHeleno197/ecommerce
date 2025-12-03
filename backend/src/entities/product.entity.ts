@@ -32,6 +32,9 @@ export class Product extends BaseEntity {
   @Column({ type: dbTypes.enumType, enum: ProductTypeEnum, nullable: true })
   type: ProductTypeEnum;
 
+  @Column('varchar', { nullable: true })
+  image: string | null;
+
   @OneToMany(() => CartItem, (cartItem) => cartItem.productId)
   cartItems: CartItem[];
 

@@ -16,41 +16,23 @@ export const getProductList: ListProducts = async () => {
   }));
 };
 
-export const getProductById = async (id: number) => {
+export const getProductById = async (id: string) => {
   const response = await axios.get(`${BASE_URL}/products/${id}`);
 
   return response.data;
 };
 
 export const createProduct = async (productData: Product) => {
-  const response = await axios.post(`${BASE_URL}/products`, {
-    productData: {
-      name: productData.name,
-      description: productData.description,
-      price: productData.price,
-      stock: productData.stock,
-      type: productData.type,
-    },
-  });
-
+  const response = await axios.post(`${BASE_URL}/products`, productData);
   return response.data;
 };
 
-export const updateProduct = async (id: number, productData: Product) => {
-  const response = await axios.put(`${BASE_URL}/products/${id}`, {
-    productData: {
-      name: productData.name,
-      description: productData.description,
-      price: productData.price,
-      stock: productData.stock,
-      type: productData.type,
-    },
-  });
-
+export const updateProduct = async (id: string, productData: Product) => {
+  const response = await axios.put(`${BASE_URL}/products/${id}`, productData);
   return response.data;
 };
 
-export const deleteProduct = async (id: number) => {
+export const deleteProduct = async (id: string) => {
   const response = await axios.delete(`${BASE_URL}/products/${id}`);
 
   return response.data;
