@@ -1,14 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Product from "../pages/product/ProductPage";
-import Cart from "../pages/cart/CartPage";
+import MainLayout from "../layouts/Main";
+import ProductPage from "../pages/product/ProductPage";
 
-export default function AppRoutes() {
+function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/products" element={<Product />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<h1>Welcome to the Home Page</h1>} />
+          <Route path="/products" element={<ProductPage />} />
+          <Route path="/profile" element={<h1>User Profile Page</h1>} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
 }
+
+export default App;
