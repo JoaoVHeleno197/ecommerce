@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { getProductList } from "../../services/product/integration";
 import type { Product } from "../../services/product/types";
 import ButtonP from "../botao/ButtonP";
 import { ProductBackground, ProductContainer } from "./styles";

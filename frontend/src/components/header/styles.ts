@@ -33,12 +33,10 @@ export const MenuList = styled.ul`
 export const MenuItem = styled.li`
   display: flex;
   align-items: center;
-  padding: 12px 10px;
+  padding: 8px 6px;
   border-radius: 8px;
   cursor: pointer;
-  gap: 10px;
   font-size: 16px;
-
   transition: 0.2s;
 
   span {
@@ -49,9 +47,21 @@ export const MenuItem = styled.li`
   a {
     color: white;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 10px;
+    border-radius: 8px;
+    transition: 0.2s;
   }
 
-  &:hover {
+  /* Quando a rota estiver ativa */
+  a.active {
+    background: #444; /* cor do item ativo */
+  }
+
+  a:hover {
     background: #333;
   }
 `;

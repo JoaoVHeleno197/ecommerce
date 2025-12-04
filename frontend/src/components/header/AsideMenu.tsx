@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { home, productMenu } from "../../assets";
 import * as S from "./styles";
 
@@ -12,7 +13,10 @@ const items = [
     label: "Produtos",
     href: "/products",
   },
-  { label: "Perfil", href: "/profile" },
+  {
+    label: "Perfil",
+    href: "/profile",
+  },
 ];
 
 const AsideMenu = () => {
@@ -24,13 +28,10 @@ const AsideMenu = () => {
         <S.MenuList>
           {items.map((item, index) => (
             <S.MenuItem key={index}>
-              {item.icon && <span>{item.icon}</span>}
-
-              {item.href ? (
-                <a href={item.href}>{item.label}</a>
-              ) : (
-                <span>{item.label}</span>
-              )}
+              <NavLink to={item.href} end>
+                {item.icon && <span>{item.icon}</span>}
+                {item.label}
+              </NavLink>
             </S.MenuItem>
           ))}
         </S.MenuList>
